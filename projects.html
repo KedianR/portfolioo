@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kulvinder Dhull | Projects</title>
+  <meta name="description" content="Detailed case studies of Kulvinder Dhull's software projects: the problem, the technology, the result, and what was learned." />
+
+  <!-- Fonts: Space Grotesk (display), IBM Plex Sans (body), JetBrains Mono (code / meta / labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS (CDN / JIT) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Space Grotesk"', 'ui-sans-serif', 'sans-serif'],
+            sans: ['"IBM Plex Sans"', 'ui-sans-serif', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+          },
+          maxWidth: { '6.5xl': '78rem' },
+        },
+      },
+    };
+  </script>
+
+  <!-- Lucide icons (static build) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    :root {
+      color-scheme: light;
+    }
+    html.dark {
+      color-scheme: dark;
+    }
+
+    html {
+      scroll-padding-top: 5rem;
+    }
+
+    ::selection {
+      background-color: #16a34a;
+      color: #f8fafc;
+    }
+
+    /* Reveal-on-scroll: transform/opacity only, staggered via --reveal-delay. */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: calc(var(--reveal-delay, 0) * 1ms);
+      will-change: transform, opacity;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Expand/collapse panel: animates via grid-template-rows so no JS height
+       measurement is needed. Inner wrapper clips content while collapsed. */
+    .expand-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .expand-panel > div {
+      overflow: hidden;
+      min-height: 0;
+    }
+    .expand-chevron.is-open {
+      transform: rotate(180deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .expand-panel,
+      .expand-chevron {
+        transition: none !important;
+      }
+    }
+
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background-color: rgb(161 161 170 / 0.4); border-radius: 999px; border: 2px solid transparent; background-clip: content-box; }
+    html.dark ::-webkit-scrollbar-thumb { background-color: rgb(82 82 91 / 0.6); background-clip: content-box; }
+  </style>
+</head>
+<body class="bg-zinc-50 font-sans text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
+
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-green-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-zinc-950">
+    Skip to main content
+  </a>
+
+  <!-- ============ HEADER / NAVIGATION ============ -->
+  <header class="fixed inset-x-0 top-0 z-40 border-b border-zinc-200/80 bg-zinc-50/80 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/80">
+    <nav id="primary-nav" aria-label="Primary" class="mx-auto flex h-16 max-w-6.5xl items-center justify-between px-6 sm:px-8 lg:px-10">
+      <a href="index.html" class="flex items-center gap-2.5 font-display text-base font-semibold tracking-tight text-zinc-900 dark:text-white">
+        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-green-500 font-mono text-sm font-bold leading-none text-zinc-950" aria-hidden="true">{ }</span>
+        <span>Kulvinder Dhull</span>
+      </a>
+
+      <div class="hidden items-center gap-6 lg:flex">
+        <a href="index.html#about" class="text-sm font-medium text-zinc-500 transition-colors duration-200 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">About</a>
+        <a href="index.html#skills" class="text-sm font-medium text-zinc-500 transition-colors duration-200 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">Skills</a>
+        <a href="projects.html" aria-current="page" class="text-sm font-medium text-zinc-900 dark:text-white">Projects</a>
+        <a href="achievements.html" class="text-sm font-medium text-zinc-500 transition-colors duration-200 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">Achievements</a>
+        <a href="index.html#education" class="text-sm font-medium text-zinc-500 transition-colors duration-200 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">Education</a>
+        <a href="index.html#contact" class="text-sm font-medium text-zinc-500 transition-colors duration-200 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">Contact</a>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="K_d_CV.pdf" download="K_d_CV.pdf"
+           class="hidden items-center gap-1.5 rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition-colors duration-200 hover:border-zinc-400 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-white dark:focus-visible:ring-offset-zinc-950 sm:inline-flex">
+          <i data-lucide="download" class="h-3.5 w-3.5" aria-hidden="true"></i>
+          Resume
+        </a>
+
+        <button id="theme-toggle" type="button" aria-label="Toggle color theme"
+                class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-zinc-300 text-zinc-600 transition-colors duration-200 hover:border-zinc-400 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-white dark:focus-visible:ring-offset-zinc-950">
+          <i data-lucide="sun" class="hidden h-4 w-4 dark:block" aria-hidden="true"></i>
+          <i data-lucide="moon" class="block h-4 w-4 dark:hidden" aria-hidden="true"></i>
+        </button>
+
+        <button id="mobile-menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu"
+                class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-zinc-300 text-zinc-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:focus-visible:ring-offset-zinc-950 lg:hidden">
+          <i data-lucide="menu" id="menu-icon-open" class="h-4 w-4" aria-hidden="true"></i>
+          <i data-lucide="x" id="menu-icon-close" class="hidden h-4 w-4" aria-hidden="true"></i>
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobile-menu" class="hidden border-t border-zinc-200 bg-zinc-50 px-6 py-4 dark:border-zinc-800 dark:bg-zinc-950 lg:hidden">
+      <div class="flex flex-col gap-1">
+        <a href="index.html#about" class="mobile-nav-link rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-white">About</a>
+        <a href="index.html#skills" class="mobile-nav-link rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-white">Skills</a>
+        <a href="projects.html" aria-current="page" class="mobile-nav-link rounded-lg bg-zinc-100 px-3 py-2.5 text-sm font-medium text-zinc-900 dark:bg-zinc-900 dark:text-white">Projects</a>
+        <a href="achievements.html" class="mobile-nav-link rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-white">Achievements</a>
+        <a href="index.html#education" class="mobile-nav-link rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-white">Education</a>
+        <a href="index.html#contact" class="mobile-nav-link rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-white">Contact</a>
+        <a href="K_d_CV.pdf" download="K_d_CV.pdf" class="mobile-nav-link mt-1 flex items-center gap-1.5 rounded-lg border border-zinc-300 px-3 py-2.5 text-sm font-medium text-zinc-700 dark:border-zinc-700 dark:text-zinc-300">
+          <i data-lucide="download" class="h-3.5 w-3.5" aria-hidden="true"></i>
+          Resume
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ============ PAGE INTRO ============ -->
+    <section class="pt-32 sm:pt-36 lg:pt-28">
+      <div class="mx-auto max-w-6.5xl px-6 sm:px-8 lg:px-10">
+        <a href="index.html#projects" class="reveal inline-flex items-center gap-1.5 text-sm font-medium text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+          <i data-lucide="arrow-left" class="h-3.5 w-3.5" aria-hidden="true"></i>
+          Back to portfolio
+        </a>
+        <h1 class="reveal mt-5 font-display text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-4xl" style="--reveal-delay:60">
+          Projects
+        </h1>
+        <p class="reveal mt-4 max-w-2xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-[17px]" style="--reveal-delay:100">
+          Full write-ups for each build. Open a project to read the problem it solved, how it was built, and what came out of it, alongside screenshots.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ PROJECT LIST ============ -->
+    <section class="py-16 sm:py-20">
+      <div class="mx-auto flex max-w-6.5xl flex-col gap-8 px-6 sm:px-8 lg:px-10">
+
+        <!-- Project 1: Web -->
+        <article id="project-1" class="reveal overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+          <!-- Cover image slot: replace the placeholder div below with
+               <img src="project-1-cover.jpg" alt="[PROJECT_1_TITLE] dashboard" class="h-full w-full object-cover" />
+               A 16:9 screenshot works well here. -->
+          <div class="aspect-[16/9] w-full overflow-hidden border-b border-dashed border-zinc-300 bg-zinc-100/70 dark:border-zinc-700 dark:bg-zinc-950/50">
+            <div class="flex h-full flex-col items-center justify-center gap-2 p-6 text-center">
+              <span class="flex h-11 w-11 items-center justify-center rounded-full bg-white text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500">
+                <i data-lucide="image" class="h-5 w-5" aria-hidden="true"></i>
+              </span>
+              <p class="font-mono text-xs font-medium text-zinc-500 dark:text-zinc-400">Add a cover screenshot</p>
+            </div>
+          </div>
+
+          <div class="p-7 sm:p-8">
+            <span class="inline-flex w-fit items-center gap-1.5 rounded-full border border-zinc-200 px-2.5 py-1 font-mono text-[11px] font-medium uppercase tracking-wide text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
+              <i data-lucide="globe" class="h-3 w-3" aria-hidden="true"></i> Web
+            </span>
+            <h2 class="mt-4 font-display text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white">[PROJECT_1_TITLE]</h2>
+            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+              A web app for real-time hostel complaint tracking and QR-based mess attendance, replacing a paper register.
+            </p>
+
+            <div class="mt-5 flex flex-wrap gap-1.5">
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">React</span>
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">Tailwind CSS</span>
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">Node.js</span>
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">Express</span>
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">MongoDB</span>
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center gap-4">
+              <a href="[PROJECT_1_REPO_LINK]" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:text-zinc-400 dark:hover:text-white">
+                <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg> Code
+              </a>
+              <a href="[PROJECT_1_DEMO_LINK]" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:text-zinc-400 dark:hover:text-white">
+                <i data-lucide="external-link" class="h-4 w-4" aria-hidden="true"></i> Live Demo
+              </a>
+            </div>
+          </div>
+
+          <div class="border-t border-zinc-200 dark:border-zinc-800">
+            <button type="button" class="expand-toggle flex w-full items-center justify-between gap-4 px-7 py-4 text-left transition-colors hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-green-500 dark:hover:bg-zinc-950/60 sm:px-8"
+                    aria-expanded="false" aria-controls="project-1-panel">
+              <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-green-600 dark:text-green-400">Read the full case study</span>
+              <i data-lucide="chevron-down" class="expand-chevron h-4 w-4 shrink-0 text-zinc-400 transition-transform duration-300" aria-hidden="true"></i>
+            </button>
+            <div id="project-1-panel" class="expand-panel">
+              <div>
+                <div class="space-y-5 px-7 pb-8 pt-1 sm:px-8">
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="target" class="h-3.5 w-3.5" aria-hidden="true"></i> Problem</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Hostel residents had no simple way to log maintenance issues or verify meal attendance, so complaints were written in a physical register and often went unresolved for weeks. Wardens had no visibility into which issues were still open.</p>
+                  </div>
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="code-2" class="h-3.5 w-3.5" aria-hidden="true"></i> Technology</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Built with React and Tailwind CSS on the frontend, a Node.js and Express REST API on the backend, MongoDB for storage, and JWT-based authentication for student and warden roles.</p>
+                  </div>
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="check-circle-2" class="h-3.5 w-3.5" aria-hidden="true"></i> Result</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Students file and track complaints from their phone, wardens see a live dashboard of open issues sorted by hostel block and priority, and meal attendance is logged with a QR scan instead of a paper register.</p>
+                  </div>
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="lightbulb" class="h-3.5 w-3.5" aria-hidden="true"></i> Learning</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Designing a relational-feeling schema in a document database taught me to think carefully about when to embed data and when to reference it, since MongoDB does not enforce foreign keys the way SQL does.</p>
+                  </div>
+
+                  <!-- Detail image slots: replace each placeholder below with a real
+                       <img src="..." alt="..." class="h-full w-full object-cover" /> -->
+                  <div class="grid gap-4 pt-1 sm:grid-cols-2">
+                    <div class="aspect-video overflow-hidden rounded-xl border border-dashed border-zinc-300 bg-zinc-100/70 dark:border-zinc-700 dark:bg-zinc-950/50">
+                      <div class="flex h-full flex-col items-center justify-center gap-1.5 p-4 text-center">
+                        <i data-lucide="image" class="h-4 w-4 text-zinc-400 dark:text-zinc-500" aria-hidden="true"></i>
+                        <p class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">Complaint dashboard screenshot</p>
+                      </div>
+                    </div>
+                    <div class="aspect-video overflow-hidden rounded-xl border border-dashed border-zinc-300 bg-zinc-100/70 dark:border-zinc-700 dark:bg-zinc-950/50">
+                      <div class="flex h-full flex-col items-center justify-center gap-1.5 p-4 text-center">
+                        <i data-lucide="image" class="h-4 w-4 text-zinc-400 dark:text-zinc-500" aria-hidden="true"></i>
+                        <p class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">QR attendance scan screenshot</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap gap-3 pt-2">
+                    <a href="[PROJECT_1_REPO_LINK]" class="inline-flex items-center gap-2 rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:border-zinc-400 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-white">
+                      <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg> View Code
+                    </a>
+                    <a href="[PROJECT_1_DEMO_LINK]" class="inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200">
+                      <i data-lucide="external-link" class="h-4 w-4" aria-hidden="true"></i> Live Demo
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2: Systems -->
+        <article id="project-2" class="reveal overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900" style="--reveal-delay:60">
+          <div class="aspect-[16/9] w-full overflow-hidden border-b border-dashed border-zinc-300 bg-zinc-100/70 dark:border-zinc-700 dark:bg-zinc-950/50">
+            <div class="flex h-full flex-col items-center justify-center gap-2 p-6 text-center">
+              <span class="flex h-11 w-11 items-center justify-center rounded-full bg-white text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500">
+                <i data-lucide="image" class="h-5 w-5" aria-hidden="true"></i>
+              </span>
+              <p class="font-mono text-xs font-medium text-zinc-500 dark:text-zinc-400">Add a cover screenshot</p>
+            </div>
+          </div>
+
+          <div class="p-7 sm:p-8">
+            <span class="inline-flex w-fit items-center gap-1.5 rounded-full border border-zinc-200 px-2.5 py-1 font-mono text-[11px] font-medium uppercase tracking-wide text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
+              <i data-lucide="terminal" class="h-3 w-3" aria-hidden="true"></i> Systems
+            </span>
+            <h2 class="mt-4 font-display text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white">[PROJECT_2_TITLE]</h2>
+            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+              A command-line shell built from scratch with piping, redirection, and job control, using raw POSIX system calls.
+            </p>
+
+            <div class="mt-5 flex flex-wrap gap-1.5">
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">C++</span>
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">POSIX</span>
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">Makefile</span>
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">Linux</span>
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center gap-4">
+              <a href="[PROJECT_2_REPO_LINK]" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:text-zinc-400 dark:hover:text-white">
+                <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg> Code
+              </a>
+              <a href="[PROJECT_2_DEMO_LINK]" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:text-zinc-400 dark:hover:text-white">
+                <i data-lucide="external-link" class="h-4 w-4" aria-hidden="true"></i> Live Demo
+              </a>
+            </div>
+          </div>
+
+          <div class="border-t border-zinc-200 dark:border-zinc-800">
+            <button type="button" class="expand-toggle flex w-full items-center justify-between gap-4 px-7 py-4 text-left transition-colors hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-green-500 dark:hover:bg-zinc-950/60 sm:px-8"
+                    aria-expanded="false" aria-controls="project-2-panel">
+              <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-green-600 dark:text-green-400">Read the full case study</span>
+              <i data-lucide="chevron-down" class="expand-chevron h-4 w-4 shrink-0 text-zinc-400 transition-transform duration-300" aria-hidden="true"></i>
+            </button>
+            <div id="project-2-panel" class="expand-panel">
+              <div>
+                <div class="space-y-5 px-7 pb-8 pt-1 sm:px-8">
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="target" class="h-3.5 w-3.5" aria-hidden="true"></i> Problem</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Understanding how a shell talks to the operating system is difficult to grasp from lecture slides alone, so I built one from scratch to see fork, exec, and pipe in action instead of just reading about them.</p>
+                  </div>
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="code-2" class="h-3.5 w-3.5" aria-hidden="true"></i> Technology</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Written in C++ using POSIX system calls directly, including fork, execvp, pipe, dup2, and waitpid, compiled with a custom Makefile, and tested against real workloads on Linux.</p>
+                  </div>
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="check-circle-2" class="h-3.5 w-3.5" aria-hidden="true"></i> Result</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">A command-line shell that supports piping between commands, input and output redirection, background jobs with job control, and persistent command history, all without relying on any external libraries.</p>
+                  </div>
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="lightbulb" class="h-3.5 w-3.5" aria-hidden="true"></i> Learning</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Implementing pipes and file descriptor duplication by hand made process communication and I/O redirection click in a way that reading about them in a textbook never did.</p>
+                  </div>
+
+                  <div class="grid gap-4 pt-1 sm:grid-cols-2">
+                    <div class="aspect-video overflow-hidden rounded-xl border border-dashed border-zinc-300 bg-zinc-100/70 dark:border-zinc-700 dark:bg-zinc-950/50">
+                      <div class="flex h-full flex-col items-center justify-center gap-1.5 p-4 text-center">
+                        <i data-lucide="image" class="h-4 w-4 text-zinc-400 dark:text-zinc-500" aria-hidden="true"></i>
+                        <p class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">Terminal session screenshot</p>
+                      </div>
+                    </div>
+                    <div class="aspect-video overflow-hidden rounded-xl border border-dashed border-zinc-300 bg-zinc-100/70 dark:border-zinc-700 dark:bg-zinc-950/50">
+                      <div class="flex h-full flex-col items-center justify-center gap-1.5 p-4 text-center">
+                        <i data-lucide="image" class="h-4 w-4 text-zinc-400 dark:text-zinc-500" aria-hidden="true"></i>
+                        <p class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">Pipe / process flow diagram</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap gap-3 pt-2">
+                    <a href="[PROJECT_2_REPO_LINK]" class="inline-flex items-center gap-2 rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:border-zinc-400 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-white">
+                      <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg> View Code
+                    </a>
+                    <a href="[PROJECT_2_DEMO_LINK]" class="inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200">
+                      <i data-lucide="external-link" class="h-4 w-4" aria-hidden="true"></i> Live Demo
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3: AI/ML -->
+        <article id="project-3" class="reveal overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900" style="--reveal-delay:120">
+          <div class="aspect-[16/9] w-full overflow-hidden border-b border-dashed border-zinc-300 bg-zinc-100/70 dark:border-zinc-700 dark:bg-zinc-950/50">
+            <div class="flex h-full flex-col items-center justify-center gap-2 p-6 text-center">
+              <span class="flex h-11 w-11 items-center justify-center rounded-full bg-white text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500">
+                <i data-lucide="image" class="h-5 w-5" aria-hidden="true"></i>
+              </span>
+              <p class="font-mono text-xs font-medium text-zinc-500 dark:text-zinc-400">Add a cover screenshot</p>
+            </div>
+          </div>
+
+          <div class="p-7 sm:p-8">
+            <span class="inline-flex w-fit items-center gap-1.5 rounded-full border border-zinc-200 px-2.5 py-1 font-mono text-[11px] font-medium uppercase tracking-wide text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
+              <i data-lucide="brain-circuit" class="h-3 w-3" aria-hidden="true"></i> AI/ML
+            </span>
+            <h2 class="mt-4 font-display text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white">[PROJECT_3_TITLE]</h2>
+            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+              An image classifier that flags common leaf diseases from a single photo, packaged as a lightweight web app.
+            </p>
+
+            <div class="mt-5 flex flex-wrap gap-1.5">
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">Python</span>
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">TensorFlow</span>
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">Keras</span>
+              <span class="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">Streamlit</span>
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center gap-4">
+              <a href="[PROJECT_3_REPO_LINK]" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:text-zinc-400 dark:hover:text-white">
+                <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg> Code
+              </a>
+              <a href="[PROJECT_3_DEMO_LINK]" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:text-zinc-400 dark:hover:text-white">
+                <i data-lucide="external-link" class="h-4 w-4" aria-hidden="true"></i> Live Demo
+              </a>
+            </div>
+          </div>
+
+          <div class="border-t border-zinc-200 dark:border-zinc-800">
+            <button type="button" class="expand-toggle flex w-full items-center justify-between gap-4 px-7 py-4 text-left transition-colors hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-green-500 dark:hover:bg-zinc-950/60 sm:px-8"
+                    aria-expanded="false" aria-controls="project-3-panel">
+              <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-green-600 dark:text-green-400">Read the full case study</span>
+              <i data-lucide="chevron-down" class="expand-chevron h-4 w-4 shrink-0 text-zinc-400 transition-transform duration-300" aria-hidden="true"></i>
+            </button>
+            <div id="project-3-panel" class="expand-panel">
+              <div>
+                <div class="space-y-5 px-7 pb-8 pt-1 sm:px-8">
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="target" class="h-3.5 w-3.5" aria-hidden="true"></i> Problem</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Identifying crop disease early can save a harvest, but most smallholder farmers do not have easy or affordable access to a plant pathologist, especially in remote areas with limited connectivity.</p>
+                  </div>
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="code-2" class="h-3.5 w-3.5" aria-hidden="true"></i> Technology</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">A convolutional neural network built with TensorFlow and Keras, trained on a labeled leaf-image dataset with augmentation, and wrapped in a lightweight Streamlit web interface for uploading and classifying a photo.</p>
+                  </div>
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="check-circle-2" class="h-3.5 w-3.5" aria-hidden="true"></i> Result</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">An image classifier that takes a single photo of a leaf and flags the most likely disease from a set of common categories, packaged as a simple web app that runs on modest hardware.</p>
+                  </div>
+                  <div>
+                    <p class="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-green-600 dark:text-green-400"><i data-lucide="lightbulb" class="h-3.5 w-3.5" aria-hidden="true"></i> Learning</p>
+                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Data augmentation mattered more than model architecture for this dataset. A smaller CNN trained with heavy augmentation generalized better than a deeper network trained on the raw images alone.</p>
+                  </div>
+
+                  <div class="grid gap-4 pt-1 sm:grid-cols-2">
+                    <div class="aspect-video overflow-hidden rounded-xl border border-dashed border-zinc-300 bg-zinc-100/70 dark:border-zinc-700 dark:bg-zinc-950/50">
+                      <div class="flex h-full flex-col items-center justify-center gap-1.5 p-4 text-center">
+                        <i data-lucide="image" class="h-4 w-4 text-zinc-400 dark:text-zinc-500" aria-hidden="true"></i>
+                        <p class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">Streamlit app screenshot</p>
+                      </div>
+                    </div>
+                    <div class="aspect-video overflow-hidden rounded-xl border border-dashed border-zinc-300 bg-zinc-100/70 dark:border-zinc-700 dark:bg-zinc-950/50">
+                      <div class="flex h-full flex-col items-center justify-center gap-1.5 p-4 text-center">
+                        <i data-lucide="image" class="h-4 w-4 text-zinc-400 dark:text-zinc-500" aria-hidden="true"></i>
+                        <p class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">Sample prediction output</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap gap-3 pt-2">
+                    <a href="[PROJECT_3_REPO_LINK]" class="inline-flex items-center gap-2 rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:border-zinc-400 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-white">
+                      <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg> View Code
+                    </a>
+                    <a href="[PROJECT_3_DEMO_LINK]" class="inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200">
+                      <i data-lucide="external-link" class="h-4 w-4" aria-hidden="true"></i> Live Demo
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="border-t border-zinc-200 py-10 dark:border-zinc-800">
+    <div class="mx-auto flex max-w-6.5xl flex-col items-center gap-4 px-6 text-center sm:flex-row sm:justify-between sm:text-left sm:px-8 lg:px-10">
+      <p class="font-mono text-xs text-zinc-500 dark:text-zinc-500">© <span id="current-year">2026</span> Kulvinder Dhull. Built from scratch, one commit at a time.</p>
+      <div class="flex items-center gap-5">
+        <a href="https://github.com/KedianR" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-zinc-400 transition-colors hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:hover:text-white">
+          <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+        </a>
+        <a href="https://linkedin.com/in/kulvinder-dhull-" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-zinc-400 transition-colors hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:hover:text-white">
+          <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+        </a>
+        <a href="mailto:kedianronz5ultra@gmail.com" aria-label="Email" class="text-zinc-400 transition-colors hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:hover:text-white">
+          <i data-lucide="mail" class="h-4 w-4" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ---------- Icons ---------- */
+    if (window.lucide) {
+      lucide.createIcons({ attrs: { 'stroke-width': 1.75 } });
+    }
+
+    /* ---------- Footer year ---------- */
+    var yearEl = document.getElementById('current-year');
+    if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+    /* ---------- Theme toggle ----------
+       Defaults to dark unless the OS explicitly prefers light. No
+       localStorage: artifact previews in Claude.ai don't support it, so the
+       choice lives in memory for the session. Safe to add localStorage
+       yourself once this file is hosted on your own domain. */
+    var htmlEl = document.documentElement;
+    var systemPrefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    if (!systemPrefersLight) {
+      htmlEl.classList.add('dark');
+    }
+    var themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function () {
+        htmlEl.classList.toggle('dark');
+      });
+    }
+
+    /* ---------- Mobile menu ---------- */
+    var menuToggle = document.getElementById('mobile-menu-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var menuIconOpen = document.getElementById('menu-icon-open');
+    var menuIconClose = document.getElementById('menu-icon-close');
+
+    function closeMobileMenu() {
+      if (!mobileMenu || mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.add('hidden');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open menu');
+      if (menuIconOpen) menuIconOpen.classList.remove('hidden');
+      if (menuIconClose) menuIconClose.classList.add('hidden');
+    }
+
+    function toggleMobileMenu() {
+      var isHidden = mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden');
+      menuToggle.setAttribute('aria-expanded', String(isHidden));
+      menuToggle.setAttribute('aria-label', isHidden ? 'Close menu' : 'Open menu');
+      if (menuIconOpen) menuIconOpen.classList.toggle('hidden');
+      if (menuIconClose) menuIconClose.classList.toggle('hidden');
+    }
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', toggleMobileMenu);
+      document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
+        link.addEventListener('click', closeMobileMenu);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeMobileMenu();
+      });
+    }
+
+    /* ---------- Reveal-on-scroll ---------- */
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+    } else {
+      var revealObserver = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach(function (el) { revealObserver.observe(el); });
+    }
+
+    /* ---------- Expand / collapse case studies ---------- */
+    function setPanelOpen(btn, open) {
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      var chevron = btn.querySelector('.expand-chevron');
+      btn.setAttribute('aria-expanded', String(open));
+      if (panel) panel.style.gridTemplateRows = open ? '1fr' : '0fr';
+      if (chevron) chevron.classList.toggle('is-open', open);
+    }
+
+    document.querySelectorAll('.expand-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setPanelOpen(btn, btn.getAttribute('aria-expanded') !== 'true');
+      });
+    });
+
+    /* ---------- Auto-expand and scroll to a project from a "#project-N" link ---------- */
+    function openProjectFromHash() {
+      var id = window.location.hash.replace('#', '');
+      if (!id) return;
+      var article = document.getElementById(id);
+      if (!article) return;
+      var btn = article.querySelector('.expand-toggle');
+      if (btn && btn.getAttribute('aria-expanded') !== 'true') {
+        setPanelOpen(btn, true);
+      }
+      window.setTimeout(function () {
+        article.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      }, 60);
+    }
+    window.addEventListener('DOMContentLoaded', openProjectFromHash);
+    window.addEventListener('hashchange', openProjectFromHash);
+  </script>
+
+</body>
+</html>
